@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALFA | Peças e Assistência Técnica</title>
+    <title>ALFA | Peças e Assistência Técnica Premium</title>
     
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Inter e Rajdhani -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Tailwind Configuração Customizada -->
     <script>
         tailwind.config = {
             theme: {
@@ -27,30 +25,31 @@
                     },
                     colors: {
                         alfa: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
                             500: '#ef4444',
-                            600: '#dc2626',
+                            600: '#dc2626', // Vermelho Core
                             700: '#b91c1c',
-                            800: '#991b1b',
                             900: '#7f1d1d',
                         },
-                        dark: {
-                            900: '#030303',
-                            800: '#0a0a0a',
-                            700: '#141414',
+                        tech: {
+                            900: '#0f172a', // Slate 900
+                            800: '#1e293b',
+                            50: '#f8fafc',
                         }
                     },
                     animation: {
-                        'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
-                        'grid-flow': 'grid-flow 20s linear infinite',
+                        'grid-move': 'grid-move 30s linear infinite',
+                        'scan-line': 'scan-line 2s cubic-bezier(0.4, 0, 0.2, 1) infinite',
                     },
                     keyframes: {
-                        'pulse-glow': {
-                            '0%, 100%': { opacity: 0.3, transform: 'scale(1)' },
-                            '50%': { opacity: 0.6, transform: 'scale(1.05)' },
+                        'grid-move': {
+                            '0%': { backgroundPosition: '0 0' },
+                            '100%': { backgroundPosition: '40px 40px' },
                         },
-                        'grid-flow': {
-                            '0%': { transform: 'translateY(0)' },
-                            '100%': { transform: 'translateY(40px)' },
+                        'scan-line': {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' },
                         }
                     }
                 }
@@ -61,48 +60,66 @@
     <!-- Ícones Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- CSS Customizado -->
     <style>
         body {
-            background-color: #030303;
-            color: #ffffff;
+            background-color: #f8fafc;
+            color: #0f172a;
             overflow-x: hidden;
         }
+
+        /* Fundo Tecnológico Sutil (Micro-Grid) */
+        .tech-pattern {
+            background-image: radial-gradient(rgba(15, 23, 42, 0.1) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Cortes Tecnológicos nos Botões e Cards (Clip Path) */
+        .clip-tech {
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.3s ease;
+        }
         
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #030303; }
-        ::-webkit-scrollbar-thumb { background: #262626; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #dc2626; }
-
-        /* Estética Tecnológica */
-        .tech-grid {
-            background-image: 
-                linear-gradient(to right, rgba(220, 38, 38, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(220, 38, 38, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
-            -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
+        /* Efeito de Vidro Flutuante */
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.08);
         }
 
-        .glass-panel {
-            background: rgba(10, 10, 10, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s ease;
+        /* Card Interativo de Produto */
+        .tech-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .glass-panel:hover {
-            border-color: rgba(220, 38, 38, 0.4);
-            box-shadow: 0 8px 32px rgba(220, 38, 38, 0.15);
+        .tech-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: #dc2626;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .tech-card:hover {
             transform: translateY(-5px);
+            border-color: #cbd5e1;
+            box-shadow: 0 20px 40px -15px rgba(220, 38, 38, 0.1);
+        }
+        .tech-card:hover::before {
+            transform: scaleX(1);
         }
 
         /* Animações de Scroll (Reveal) */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .reveal.active {
             opacity: 1;
@@ -112,321 +129,283 @@
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
 
-        /* Botões */
-        .btn-glow {
-            position: relative;
-            z-index: 1;
-        }
-        .btn-glow::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: inherit;
-            border-radius: inherit;
-            z-index: -1;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-        }
-        .btn-glow.red::before { background: #dc2626; }
-        .btn-glow.green::before { background: #16a34a; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #dc2626; }
         
-        .btn-glow.red:hover::before { box-shadow: 0 0 25px rgba(220, 38, 38, 0.6); }
-        .btn-glow.green:hover::before { box-shadow: 0 0 25px rgba(34, 197, 94, 0.6); }
-
-        /* Pulso Verde do WhatsApp */
-        .btn-wpp { animation: pulse-green 2s infinite; }
-        @keyframes pulse-green { 
-            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); } 
-            70% { box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); } 
-            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } 
+        /* Pulso WhatsApp */
+        .pulse-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid #22c55e;
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.8); opacity: 0; }
         }
     </style>
 </head>
 <body class="antialiased selection:bg-alfa-600 selection:text-white">
 
     <!-- Botão Fixo WhatsApp -->
-    <a href="https://wa.me/5531973606104" target="_blank" rel="noopener noreferrer" class="btn-wpp fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 hover:scale-110 transition-all flex items-center justify-center" aria-label="Falar no WhatsApp">
-        <i data-lucide="message-circle" class="w-8 h-8 md:w-9 md:h-9"></i>
-    </a>
-
-    <!-- Background Layers -->
-    <div class="fixed inset-0 z-0 pointer-events-none">
-        <div class="absolute inset-0 tech-grid animate-grid-flow"></div>
-        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-alfa-900/30 rounded-full blur-[120px] animate-pulse-glow"></div>
-        <div class="absolute bottom-[20%] right-[-10%] w-[400px] h-[400px] bg-alfa-600/10 rounded-full blur-[100px]"></div>
+    <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex items-center justify-center group">
+        <div class="pulse-ring pointer-events-none"></div>
+        <a href="https://wa.me/5531973606104" target="_blank" rel="noopener noreferrer" class="relative bg-green-500 text-white p-4 rounded-full shadow-lg shadow-green-500/30 hover:bg-green-600 hover:scale-110 transition-all duration-300 flex items-center justify-center z-10">
+            <i data-lucide="message-circle" class="w-7 h-7 md:w-8 md:h-8"></i>
+        </a>
     </div>
 
-    <!-- NAVBAR -->
-    <header id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent py-5">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between items-center">
+    <!-- Background Layer Base -->
+    <div class="fixed inset-0 z-0 pointer-events-none tech-pattern opacity-50"></div>
+
+    <!-- NAVBAR (Design Flutuante "Pill") -->
+    <div class="fixed top-4 left-0 w-full z-50 flex justify-center px-4 transition-transform duration-500" id="navbar-container">
+        <header class="w-full max-w-6xl glass-pill rounded-2xl px-6 py-3 flex justify-between items-center">
             
-            <!-- Logo -->
-            <a href="#" class="flex items-center gap-3 group relative">
+            <!-- Logo (Fundo branco perfeito com o design) -->
+            <a href="#" class="flex items-center gap-3">
                 <img 
                     src="logo.jpeg" 
                     alt="ALFA Logo" 
-                    class="h-12 w-auto object-contain rounded drop-shadow-[0_0_10px_rgba(220,38,38,0.3)] transition-transform duration-300 group-hover:scale-105"
-                    onerror="this.outerHTML='<div class=\'flex items-center gap-2\'><div class=\'w-10 h-10 rounded bg-gradient-to-br from-alfa-600 to-alfa-900 flex items-center justify-center font-serif font-bold text-2xl italic shadow-[0_0_15px_rgba(220,38,38,0.5)]\'>α</div><span class=\'text-2xl font-tech font-bold tracking-widest\'>ALFA</span></div>'"
+                    class="h-10 md:h-12 w-auto object-contain hover:opacity-90 transition-opacity"
+                    onerror="this.outerHTML='<span class=\'text-2xl font-tech font-bold text-alfa-600\'>ALFA</span>'"
                 >
             </a>
 
             <!-- Menu Desktop -->
-            <nav class="hidden md:flex items-center gap-10 font-tech text-lg font-medium tracking-wide">
-                <a href="#produtos" class="text-gray-300 hover:text-white transition-colors relative group">
-                    PRODUTOS
-                    <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-alfa-600 transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#sobre" class="text-gray-300 hover:text-white transition-colors relative group">
-                    A LOJA
-                    <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-alfa-600 transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#diferenciais" class="text-gray-300 hover:text-white transition-colors relative group">
-                    DIFERENCIAIS
-                    <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-alfa-600 transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#contato" class="text-gray-300 hover:text-white transition-colors relative group">
-                    CONTATO
-                    <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-alfa-600 transition-all duration-300 group-hover:w-full"></span>
-                </a>
+            <nav class="hidden md:flex items-center gap-8 font-tech text-base font-bold tracking-wider text-tech-800">
+                <a href="#produtos" class="hover:text-alfa-600 transition-colors">PRODUTOS</a>
+                <a href="#galeria" class="hover:text-alfa-600 transition-colors">FERRAMENTAS</a>
+                <a href="#sobre" class="hover:text-alfa-600 transition-colors">A LOJA</a>
+                <a href="#contato" class="hover:text-alfa-600 transition-colors">CONTATO</a>
             </nav>
 
-            <!-- Mobile Menu Toggle -->
-            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
-                <i data-lucide="menu" class="w-8 h-8"></i>
-            </button>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="absolute top-full left-0 w-full bg-dark-900/95 backdrop-blur-xl border-b border-white/10 flex flex-col hidden">
-            <a href="#produtos" class="px-6 py-4 font-tech text-lg border-b border-white/5 text-gray-300 hover:text-alfa-500">PRODUTOS</a>
-            <a href="#sobre" class="px-6 py-4 font-tech text-lg border-b border-white/5 text-gray-300 hover:text-alfa-500">A LOJA</a>
-            <a href="#diferenciais" class="px-6 py-4 font-tech text-lg border-b border-white/5 text-gray-300 hover:text-alfa-500">DIFERENCIAIS</a>
-            <a href="#contato" class="px-6 py-4 font-tech text-lg border-b border-white/5 text-gray-300 hover:text-alfa-500">CONTATO</a>
-        </div>
-    </header>
-
-    <!-- MAIN CONTENT -->
-    <main class="relative z-10 pt-32 pb-20">
-        
-        <!-- HERO SECTION -->
-        <section class="max-w-7xl mx-auto px-6 lg:px-8 min-h-[80vh] flex flex-col justify-center items-center text-center">
-            
-            <div class="reveal inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-alfa-600/30 bg-alfa-600/10 backdrop-blur-md text-alfa-500 font-tech font-semibold uppercase tracking-widest text-sm mb-8">
-                <span class="w-2 h-2 rounded-full bg-alfa-500 animate-pulse"></span>
-                Distribuição e Assistência
+            <!-- CTA Menu -->
+            <div class="hidden md:block">
+                <a href="https://wa.me/5531973606104" target="_blank" class="clip-tech bg-alfa-600 text-white px-5 py-2 text-sm font-tech font-bold tracking-widest hover:bg-alfa-700 transition-colors">
+                    ORÇAMENTO
+                </a>
             </div>
 
-            <h1 class="reveal delay-100 text-6xl md:text-8xl font-tech font-bold leading-none tracking-tight mb-6">
-                PEÇAS DE<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500 relative">
-                    ALTA PERFORMANCE
-                    <svg class="absolute w-full h-4 -bottom-2 left-0 text-alfa-600 opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none">
-                        <path d="M0 5 L20 5 L25 0 L75 0 L80 5 L100 5" fill="none" stroke="currentColor" stroke-width="2"/>
+            <!-- Mobile Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden text-tech-900 focus:outline-none">
+                <i data-lucide="menu" class="w-7 h-7"></i>
+            </button>
+        </header>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="absolute top-full mt-2 left-4 right-4 bg-white rounded-xl shadow-xl border border-gray-100 flex flex-col hidden overflow-hidden">
+            <a href="#produtos" class="px-6 py-4 font-tech font-bold text-lg border-b border-gray-50 text-tech-900 active:bg-gray-50">PRODUTOS</a>
+            <a href="#galeria" class="px-6 py-4 font-tech font-bold text-lg border-b border-gray-50 text-tech-900 active:bg-gray-50">FERRAMENTAS</a>
+            <a href="#sobre" class="px-6 py-4 font-tech font-bold text-lg border-b border-gray-50 text-tech-900 active:bg-gray-50">A LOJA</a>
+            <a href="#contato" class="px-6 py-4 font-tech font-bold text-lg text-tech-900 active:bg-gray-50">CONTATO</a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="relative z-10 pt-40 pb-20">
+        
+        <!-- HERO SECTION -->
+        <section class="max-w-7xl mx-auto px-6 lg:px-8 min-h-[70vh] flex flex-col justify-center items-center text-center relative">
+            
+            <!-- Elementos Visuais Decorativos -->
+            <div class="absolute top-1/4 left-10 w-24 h-24 bg-alfa-500/10 rounded-full blur-2xl"></div>
+            <div class="absolute bottom-1/4 right-10 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl"></div>
+
+            <div class="reveal inline-flex items-center gap-2 px-4 py-2 rounded-full border border-alfa-200 bg-white shadow-sm text-alfa-600 font-tech font-bold uppercase tracking-widest text-xs mb-8">
+                <div class="w-1.5 h-1.5 rounded-full bg-alfa-500 animate-pulse"></div>
+                Sistemas e Distribuição
+            </div>
+
+            <h1 class="reveal delay-100 text-5xl md:text-7xl lg:text-8xl font-tech font-extrabold leading-[1.1] tracking-tight mb-6 text-tech-900">
+                O MOTOR DA SUA <br>
+                <span class="relative inline-block text-alfa-600">
+                    ASSISTÊNCIA TÉCNICA
+                    <svg class="absolute w-full h-3 -bottom-1 left-0 text-alfa-100 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
+                        <path d="M0 5 L100 5" stroke="currentColor" stroke-width="10"/>
                     </svg>
                 </span>
             </h1>
 
-            <p class="reveal delay-200 max-w-2xl text-lg text-gray-400 mb-12">
-                Conecte seu aparelho ao futuro. Distribuímos peças originais, displays premium e oferecemos mão de obra qualificada para reparar o seu smartphone.
+            <p class="reveal delay-200 max-w-2xl text-lg md:text-xl text-gray-600 mb-10 font-medium">
+                Componentes de alto desempenho, ferramentas profissionais e laboratório especializado para elevar o padrão dos seus reparos.
             </p>
 
-            <div class="reveal delay-300 flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
-                <a href="#produtos" class="btn-glow red flex items-center justify-center gap-3 px-8 py-4 bg-alfa-600 rounded font-tech font-bold text-lg tracking-wide hover:bg-alfa-500 transition-colors">
+            <div class="reveal delay-300 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <a href="#produtos" class="clip-tech flex items-center justify-center gap-3 px-8 py-4 bg-tech-900 text-white font-tech font-bold text-lg tracking-wide hover:bg-tech-800 transition-all shadow-[0_10px_20px_rgba(15,23,42,0.15)] hover:shadow-[0_15px_25px_rgba(15,23,42,0.2)]">
                     <i data-lucide="cpu" class="w-5 h-5"></i>
-                    EXPLORAR CATÁLOGO
+                    VER CATÁLOGO
                 </a>
-                <a href="https://wa.me/5531973606104" target="_blank" class="flex items-center justify-center gap-3 px-8 py-4 bg-transparent border border-green-500/50 text-green-400 rounded font-tech font-bold text-lg tracking-wide hover:border-green-500 hover:bg-green-500/10 transition-colors">
-                    <i data-lucide="message-circle" class="w-5 h-5"></i>
-                    FALAR NO WHATSAPP
+                <a href="https://wa.me/5531973606104" target="_blank" class="clip-tech flex items-center justify-center gap-3 px-8 py-4 bg-alfa-600 text-white font-tech font-bold text-lg tracking-wide hover:bg-alfa-700 transition-all shadow-[0_10px_20px_rgba(220,38,38,0.2)]">
+                    <i data-lucide="zap" class="w-5 h-5"></i>
+                    FALAR COM CONSULTOR
                 </a>
             </div>
         </section>
 
         <!-- PRODUTOS -->
-        <section id="produtos" class="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-            <div class="reveal flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <section id="produtos" class="max-w-7xl mx-auto px-6 lg:px-8 py-20 mt-10">
+            <div class="reveal flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <h2 class="font-tech text-4xl md:text-5xl font-bold uppercase tracking-tight mb-2">Linhas de <span class="text-alfa-600">Produtos</span></h2>
-                    <p class="text-gray-400 max-w-xl">O ecossistema completo de peças para manutenção avançada de smartphones.</p>
+                    <h2 class="font-tech text-4xl md:text-5xl font-bold uppercase tracking-tight text-tech-900">
+                        Linhas de <span class="text-alfa-600">Hardware</span>
+                    </h2>
+                    <div class="w-20 h-1 bg-alfa-600 mt-4 rounded-full"></div>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Card 1 -->
-                <div class="reveal glass-panel p-8 rounded-xl group relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-alfa-600/10 rounded-bl-full -z-10 group-hover:bg-alfa-600/20 transition-colors"></div>
-                    <div class="w-14 h-14 rounded-lg bg-dark-800 border border-white/10 flex items-center justify-center text-alfa-500 mb-6 group-hover:border-alfa-500 group-hover:shadow-[0_0_15px_rgba(220,38,38,0.4)] transition-all">
-                        <i data-lucide="smartphone" class="w-7 h-7"></i>
+                <!-- Cards Tecnológicos -->
+                <div class="reveal tech-card clip-tech p-8">
+                    <div class="w-12 h-12 rounded bg-tech-50 border border-gray-100 flex items-center justify-center text-alfa-600 mb-6">
+                        <i data-lucide="smartphone" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="font-tech text-2xl font-bold mb-3 uppercase">Displays & Touch</h3>
-                    <p class="text-gray-400 text-sm mb-6">Telas frontais completas, OLED e LCD, testadas para garantir cores vibrantes e touch perfeito.</p>
+                    <h3 class="font-tech text-2xl font-bold mb-2 uppercase text-tech-900">Displays Premium</h3>
+                    <p class="text-gray-500 text-sm">Painéis OLED e LCD calibrados, com touch ultra-responsivo e cores fiéis ao original.</p>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="reveal delay-100 glass-panel p-8 rounded-xl group relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-alfa-600/10 rounded-bl-full -z-10 group-hover:bg-alfa-600/20 transition-colors"></div>
-                    <div class="w-14 h-14 rounded-lg bg-dark-800 border border-white/10 flex items-center justify-center text-alfa-500 mb-6 group-hover:border-alfa-500 group-hover:shadow-[0_0_15px_rgba(220,38,38,0.4)] transition-all">
-                        <i data-lucide="battery-charging" class="w-7 h-7"></i>
+                <div class="reveal delay-100 tech-card clip-tech p-8">
+                    <div class="w-12 h-12 rounded bg-tech-50 border border-gray-100 flex items-center justify-center text-alfa-600 mb-6">
+                        <i data-lucide="battery-charging" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="font-tech text-2xl font-bold mb-3 uppercase">Baterias Premium</h3>
-                    <p class="text-gray-400 text-sm mb-6">Máxima capacidade, durabilidade garantida e vida útil estendida com células de alta densidade.</p>
+                    <h3 class="font-tech text-2xl font-bold mb-2 uppercase text-tech-900">Células de Bateria</h3>
+                    <p class="text-gray-500 text-sm">Baterias de alta densidade energética, com ciclos otimizados e zero vícios de carga.</p>
                 </div>
 
-                <!-- Card 3 -->
-                <div class="reveal delay-200 glass-panel p-8 rounded-xl group relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-alfa-600/10 rounded-bl-full -z-10 group-hover:bg-alfa-600/20 transition-colors"></div>
-                    <div class="w-14 h-14 rounded-lg bg-dark-800 border border-white/10 flex items-center justify-center text-alfa-500 mb-6 group-hover:border-alfa-500 group-hover:shadow-[0_0_15px_rgba(220,38,38,0.4)] transition-all">
-                        <i data-lucide="microchip" class="w-7 h-7"></i>
+                <div class="reveal delay-200 tech-card clip-tech p-8">
+                    <div class="w-12 h-12 rounded bg-tech-50 border border-gray-100 flex items-center justify-center text-alfa-600 mb-6">
+                        <i data-lucide="microchip" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="font-tech text-2xl font-bold mb-3 uppercase">Placas e Conectores</h3>
-                    <p class="text-gray-400 text-sm mb-6">Placas de carga, conectores originais e circuitos integrados para garantir carregamento impecável.</p>
+                    <h3 class="font-tech text-2xl font-bold mb-2 uppercase text-tech-900">Placas & Circuitos</h3>
+                    <p class="text-gray-500 text-sm">Sub-placas, ICs e conectores de carga FPC homologados para soldagem precisa.</p>
                 </div>
 
-                <!-- Card 4 -->
-                <div class="reveal delay-300 glass-panel p-8 rounded-xl group relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-alfa-600/10 rounded-bl-full -z-10 group-hover:bg-alfa-600/20 transition-colors"></div>
-                    <div class="w-14 h-14 rounded-lg bg-dark-800 border border-white/10 flex items-center justify-center text-alfa-500 mb-6 group-hover:border-alfa-500 group-hover:shadow-[0_0_15px_rgba(220,38,38,0.4)] transition-all">
-                        <i data-lucide="cable" class="w-7 h-7"></i>
+                <div class="reveal delay-300 tech-card clip-tech p-8">
+                    <div class="w-12 h-12 rounded bg-tech-50 border border-gray-100 flex items-center justify-center text-alfa-600 mb-6">
+                        <i data-lucide="cable" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="font-tech text-2xl font-bold mb-3 uppercase">Acessórios</h3>
-                    <p class="text-gray-400 text-sm mb-6">Películas, capas de proteção, cabos turbo e carregadores com homologação e garantia.</p>
+                    <h3 class="font-tech text-2xl font-bold mb-2 uppercase text-tech-900">Periféricos</h3>
+                    <p class="text-gray-500 text-sm">Flex cables, botões, lentes de câmera e acessórios blindados para finalização perfeita.</p>
                 </div>
             </div>
         </section>
 
-        <!-- SOBRE A LOJA / ASSISTÊNCIA FÍSICA -->
-        <section id="sobre" class="max-w-7xl mx-auto px-6 lg:px-8 py-24 relative mt-8">
-            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-1/3 h-full bg-gradient-to-l from-alfa-900/10 to-transparent -z-10"></div>
+        <!-- GALERIA BENTO GRID (Layout Ultra-Moderno) -->
+        <section id="galeria" class="max-w-7xl mx-auto px-6 lg:px-8 py-20 bg-white border-y border-gray-100 shadow-[0_0_50px_rgba(0,0,0,0.02)]">
+            <div class="reveal flex items-center gap-4 mb-10">
+                <i data-lucide="layers" class="w-8 h-8 text-alfa-600"></i>
+                <h2 class="font-tech text-3xl md:text-4xl font-bold uppercase text-tech-900">Equipamentos da Bancada</h2>
+            </div>
 
+            <!-- Bento Box Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[150px] md:auto-rows-[200px]">
+                
+                <!-- Imagem Principal (Ocupa 2x2) -->
+                <div class="reveal col-span-2 row-span-2 relative rounded-2xl overflow-hidden group bg-tech-50 border border-gray-100 shadow-sm">
+                    <img src="pord.jpg" alt="Ferramenta Principal" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.outerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 font-tech\'>pord.jpg</div>'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-tech-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+
+                <!-- Imagem Secundária -->
+                <div class="reveal delay-100 col-span-2 md:col-span-1 row-span-1 relative rounded-2xl overflow-hidden group bg-tech-50 border border-gray-100 shadow-sm">
+                    <img src="pord2.jpg" alt="Equipamento 2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.outerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 font-tech text-sm\'>pord2.jpg</div>'">
+                </div>
+
+                <!-- Imagem Terciária (Fundo Branco ajustado com object-contain) -->
+                <div class="reveal delay-200 col-span-2 md:col-span-1 row-span-1 relative rounded-2xl overflow-hidden group bg-white border border-gray-100 shadow-sm p-4">
+                    <img src="prod1.jpg" alt="Kit de Ferramentas" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110" onerror="this.outerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 font-tech text-sm\'>prod1.jpg</div>'">
+                </div>
+
+                <!-- Imagem Quartenária -->
+                <div class="reveal delay-100 col-span-1 md:col-span-1 row-span-1 relative rounded-2xl overflow-hidden group bg-tech-50 border border-gray-100 shadow-sm">
+                    <img src="prod3.jpg" alt="Ferramenta Específica" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.outerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 font-tech text-sm\'>prod3.jpg</div>'">
+                </div>
+
+                <!-- Imagem Quinquenária -->
+                <div class="reveal delay-200 col-span-1 md:col-span-1 row-span-1 relative rounded-2xl overflow-hidden group bg-tech-50 border border-gray-100 shadow-sm">
+                    <img src="prod4.jpg" alt="Insumo" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.outerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-400 font-tech text-sm\'>prod4.jpg</div>'">
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- A LOJA (Estrutura Física e Assistência) -->
+        <section id="sobre" class="max-w-7xl mx-auto px-6 lg:px-8 py-24">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 
-                <!-- Imagem da Fachada -->
+                <!-- Imagem da Fachada (Estilo Painel Cyber) -->
                 <div class="reveal relative group order-2 lg:order-1">
-                    <div class="absolute -inset-4 bg-alfa-600/20 rounded-2xl blur-xl group-hover:bg-alfa-600/30 transition-all duration-500"></div>
+                    <!-- Decoradores Tech -->
+                    <div class="absolute -top-4 -left-4 w-20 h-20 border-t-4 border-l-4 border-alfa-600 rounded-tl-xl z-10"></div>
+                    <div class="absolute -bottom-4 -right-4 w-20 h-20 border-b-4 border-r-4 border-alfa-600 rounded-br-xl z-10"></div>
                     
-                    <div class="relative rounded-2xl overflow-hidden border border-white/10 glass-panel aspect-[4/3] md:aspect-video lg:aspect-[4/3]">
+                    <div class="relative rounded-xl overflow-hidden shadow-2xl aspect-[4/3] bg-tech-900 clip-tech">
                         <img 
                             src="loja.jpeg" 
                             alt="Fachada da Loja Alfa Peças" 
-                            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                            onerror="this.outerHTML='<div class=\'w-full h-full flex flex-col items-center justify-center bg-dark-800 text-gray-500\'><i data-lucide=\'store\' class=\'w-16 h-16 mb-4 text-alfa-600\'></i><span class=\'font-tech text-lg\'>Imagem da Loja (loja.jpeg)</span></div>'"
+                            class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                            onerror="this.outerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-500 font-tech\'>loja.jpeg</div>'"
                         >
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
-                    </div>
-
-                    <div class="absolute -bottom-6 -right-6 md:right-10 bg-dark-900 border border-alfa-600/50 p-6 rounded-xl shadow-[0_0_30px_rgba(220,38,38,0.25)] hidden md:block group-hover:-translate-y-2 transition-transform duration-500">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full bg-alfa-600/20 flex items-center justify-center">
-                                <i data-lucide="wrench" class="w-6 h-6 text-alfa-500"></i>
-                            </div>
-                            <div>
-                                <div class="font-tech text-2xl font-bold text-white leading-none">100%</div>
-                                <div class="text-xs text-gray-400 font-semibold tracking-wider uppercase mt-1">Mão de Obra Qualificada</div>
-                            </div>
-                        </div>
+                        <!-- Linha de Scan sutil no hover -->
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/10 to-transparent h-10 w-full hidden group-hover:block animate-scan-line"></div>
                     </div>
                 </div>
 
-                <!-- Conteúdo de Texto -->
+                <!-- Conteúdo -->
                 <div class="reveal delay-200 order-1 lg:order-2">
-                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-alfa-600/30 bg-alfa-600/10 text-alfa-500 font-tech font-semibold uppercase tracking-widest text-sm mb-6">
-                        <i data-lucide="map-pin" class="w-4 h-4"></i> Nossa Loja Física
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="w-8 h-8 rounded bg-alfa-100 text-alfa-600 flex items-center justify-center">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        </span>
+                        <span class="font-tech font-bold tracking-widest text-gray-500 uppercase">Centro Técnico</span>
                     </div>
                     
-                    <h2 class="font-tech text-4xl md:text-5xl font-bold mb-6 uppercase tracking-tight leading-tight">
-                        Muito mais que peças, <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-alfa-400 to-alfa-600">Sua Assistência Completa.</span>
+                    <h2 class="font-tech text-4xl md:text-5xl font-bold mb-6 uppercase tracking-tight leading-tight text-tech-900">
+                        O SUPORTE FÍSICO QUE <br>
+                        <span class="text-alfa-600">SEU APARELHO MERECE.</span>
                     </h2>
                     
-                    <div class="text-gray-300 text-lg leading-relaxed space-y-6">
+                    <div class="text-gray-600 text-lg leading-relaxed space-y-4">
                         <p>
-                            Na <strong class="text-white">Alfa Peças</strong> você encontra a maior variedade em peças para celulares e serviços de assistência técnica.
+                            Na <strong class="text-tech-900">Alfa Peças</strong>, unimos a venda de componentes premium com um laboratório de assistência técnica de ponta.
                         </p>
                         <p>
-                            Comercializamos telas, baterias, conectores e acessórios das principais marcas, além de oferecer mão de obra qualificada para reparos rápidos.
+                            Nossos especialistas realizam a troca de telas, baterias e reparos em placas utilizando as mesmas ferramentas profissionais que distribuímos, garantindo máxima segurança.
                         </p>
                         
-                        <div class="relative pl-6 py-2 border-l-4 border-alfa-600 bg-gradient-to-r from-alfa-600/10 to-transparent rounded-r-lg mt-8">
-                            <p class="font-bold text-white text-xl font-tech uppercase tracking-wider">
+                        <!-- Blockquote Tech -->
+                        <div class="mt-8 border-l-2 border-alfa-600 bg-white p-5 rounded-r-lg shadow-sm">
+                            <p class="font-bold text-tech-900 text-xl font-tech uppercase tracking-wider">
                                 Invista na durabilidade do seu aparelho!
                             </p>
+                            <p class="text-sm text-gray-500 mt-1">Garantia total em peças e mão de obra.</p>
                         </div>
-                    </div>
-
-                    <div class="mt-10 flex flex-wrap gap-4">
-                         <a href="https://wa.me/5531973606104" target="_blank" class="btn-glow green px-8 py-4 bg-green-600 text-white font-tech font-bold rounded uppercase flex items-center gap-3 hover:bg-green-500 transition-colors">
-                            <i data-lucide="message-circle" class="w-5 h-5"></i>
-                            Solicitar Orçamento
-                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- DIFERENCIAIS -->
-        <section id="diferenciais" class="py-24 relative mt-16">
-            <div class="absolute inset-0 bg-dark-800/50 border-y border-white/5 -skew-y-2 transform origin-top-left z-0"></div>
-            
-            <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-                <div class="reveal text-center max-w-3xl mx-auto mb-20">
-                    <i data-lucide="shield-check" class="w-12 h-12 text-alfa-600 mx-auto mb-4"></i>
-                    <h2 class="font-tech text-4xl md:text-5xl font-bold mb-4 uppercase">Por que escolher a <span class="text-alfa-600">ALFA</span>?</h2>
-                    <p class="text-gray-400">Qualidade, garantia e rapidez para o seu aparelho voltar a funcionar perfeitamente.</p>
-                </div>
+        <!-- SEÇÃO CONTATO FINAL -->
+        <section id="contato" class="max-w-4xl mx-auto px-6 lg:px-8 py-20">
+            <div class="reveal clip-tech bg-tech-900 p-12 text-center shadow-2xl relative overflow-hidden">
+                <!-- Efeito Glow de Fundo Escuro -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-alfa-600/20 rounded-full blur-3xl"></div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                    <div class="reveal delay-100 flex flex-col items-center text-center">
-                        <div class="relative mb-6">
-                            <div class="w-20 h-20 bg-dark-900 border border-white/10 rounded-full flex items-center justify-center z-10 relative">
-                                <i data-lucide="crosshair" class="w-8 h-8 text-white"></i>
-                            </div>
-                            <div class="absolute inset-0 border-2 border-alfa-600 border-dashed rounded-full animate-[spin_10s_linear_infinite] opacity-50"></div>
-                        </div>
-                        <h3 class="font-tech text-2xl font-bold mb-3 uppercase">Peças Testadas</h3>
-                        <p class="text-gray-400 text-sm">Trabalhamos apenas com componentes de alta qualidade, homologados e testados antes de qualquer instalação.</p>
-                    </div>
-
-                    <div class="reveal delay-200 flex flex-col items-center text-center">
-                        <div class="relative mb-6">
-                            <div class="w-20 h-20 bg-dark-900 border border-white/10 rounded-full flex items-center justify-center z-10 relative">
-                                <i data-lucide="clock" class="w-8 h-8 text-white"></i>
-                            </div>
-                            <div class="absolute inset-0 border-2 border-alfa-600 border-dashed rounded-full animate-[spin_15s_linear_infinite_reverse] opacity-50"></div>
-                        </div>
-                        <h3 class="font-tech text-2xl font-bold mb-3 uppercase">Reparo Rápido</h3>
-                        <p class="text-gray-400 text-sm">Entendemos que você não pode ficar sem seu celular. Priorizamos agilidade sem abrir mão da qualidade.</p>
-                    </div>
-
-                    <div class="reveal delay-300 flex flex-col items-center text-center">
-                        <div class="relative mb-6">
-                            <div class="w-20 h-20 bg-dark-900 border border-white/10 rounded-full flex items-center justify-center z-10 relative">
-                                <i data-lucide="wrench" class="w-8 h-8 text-white"></i>
-                            </div>
-                            <div class="absolute inset-0 border-2 border-alfa-600 border-dashed rounded-full animate-[spin_10s_linear_infinite] opacity-50"></div>
-                        </div>
-                        <h3 class="font-tech text-2xl font-bold mb-3 uppercase">Técnicos Especialistas</h3>
-                        <p class="text-gray-400 text-sm">Equipe preparada e atualizada com as melhores ferramentas para realizar o conserto do seu dispositivo com segurança.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SEÇÃO CONTATO/ENDEREÇO -->
-        <section id="contato" class="max-w-5xl mx-auto px-6 lg:px-8 py-20">
-            <div class="reveal glass-panel p-12 rounded-2xl text-center relative overflow-hidden border-alfa-600/30">
-                <div class="absolute inset-0 bg-gradient-to-t from-alfa-900/20 to-transparent -z-10"></div>
-                
-                <i data-lucide="map-pin" class="w-12 h-12 text-alfa-600 mx-auto mb-4"></i>
-                <h2 class="font-tech text-4xl font-bold mb-4 uppercase">Visite Nossa Sede</h2>
-                <p class="text-gray-300 mb-8 max-w-2xl mx-auto text-lg leading-relaxed">
-                    Traga o seu aparelho para um orçamento sem compromisso ou venha conhecer nossa variedade de acessórios.<br>
-                    <strong class="text-white text-xl mt-4 block">65 R. Honório Hermeto</strong>
-                    <span class="text-sm text-gray-400">Belo Horizonte - MG</span>
+                <i data-lucide="map-pin" class="w-12 h-12 text-alfa-500 mx-auto mb-6 relative z-10"></i>
+                <h2 class="font-tech text-4xl font-bold mb-4 uppercase text-white relative z-10">Faça-nos uma Visita</h2>
+                <p class="text-gray-300 mb-10 max-w-xl mx-auto text-lg relative z-10">
+                    Traga o seu aparelho para avaliação ou venha estruturar a sua bancada com nossos equipamentos.<br>
+                    <span class="text-white text-2xl font-bold mt-4 block font-tech">65 R. Honório Hermeto</span>
+                    <span class="text-alfa-400 font-medium">Belo Horizonte - MG</span>
                 </p>
                 
-                <a href="https://wa.me/5531973606104" target="_blank" class="btn-glow green inline-flex items-center gap-3 px-10 py-4 bg-green-600 text-white font-tech font-bold text-xl rounded uppercase tracking-widest shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:bg-green-500 transition-colors">
+                <a href="https://wa.me/5531973606104" target="_blank" class="clip-tech relative z-10 inline-flex items-center gap-3 px-10 py-5 bg-green-500 text-white font-tech font-bold text-xl tracking-widest hover:bg-green-400 transition-colors shadow-[0_0_20px_rgba(34,197,94,0.3)]">
                     <i data-lucide="message-circle" class="w-6 h-6"></i>
-                    INICIAR CONVERSA NO WHATSAPP
+                    ACIONAR WHATSAPP
                 </a>
             </div>
         </section>
@@ -434,53 +413,45 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-[#020202] border-t border-white/10 pt-16 pb-8 relative z-10">
+    <footer class="bg-white border-t border-gray-200 pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
                 
                 <!-- Coluna 1 -->
                 <div class="col-span-1">
-                    <img src="logo.jpeg" alt="ALFA Logo" class="h-10 w-auto object-contain rounded mb-6 grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all" onerror="this.style.display='none'">
-                    <p class="text-gray-500 text-sm mb-6 leading-relaxed">
-                        ALFA Peças e Assistência.<br>
-                        Garantindo a durabilidade e o funcionamento perfeito do seu aparelho móvel.
+                    <img src="logo.jpeg" alt="ALFA Logo" class="h-10 w-auto object-contain mb-6" onerror="this.outerHTML='<span class=\'text-2xl font-tech font-bold text-tech-900 mb-6 block\'>ALFA</span>'">
+                    <p class="text-gray-500 text-sm mb-6 leading-relaxed font-medium">
+                        Soluções em Hardware Mobile.<br>
+                        Garantindo a durabilidade e o funcionamento perfeito da tecnologia no seu dia a dia.
                     </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded bg-white/5 flex items-center justify-center text-gray-400 hover:bg-alfa-600 hover:text-white transition-colors">
-                            <i data-lucide="instagram" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded bg-white/5 flex items-center justify-center text-gray-400 hover:bg-alfa-600 hover:text-white transition-colors">
-                            <i data-lucide="facebook" class="w-5 h-5"></i>
-                        </a>
-                    </div>
                 </div>
                 
                 <!-- Coluna 2 -->
                 <div>
-                    <h4 class="font-tech text-white font-bold text-lg mb-6 uppercase tracking-wider">Nossos Serviços</h4>
-                    <ul class="space-y-3 text-sm text-gray-400">
-                        <li><span class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3 text-alfa-600"></i> Troca de Telas / Displays</span></li>
-                        <li><span class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3 text-alfa-600"></i> Troca de Baterias</span></li>
-                        <li><span class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3 text-alfa-600"></i> Reparo em Placas</span></li>
-                        <li><span class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3 text-alfa-600"></i> Venda de Acessórios</span></li>
+                    <h4 class="font-tech text-tech-900 font-bold text-lg mb-6 uppercase tracking-wider">Especialidades</h4>
+                    <ul class="space-y-3 text-sm text-gray-600 font-medium">
+                        <li><span class="flex items-center gap-2 hover:text-alfa-600 cursor-default"><i data-lucide="check-square" class="w-4 h-4 text-alfa-500"></i> Troca de Displays</span></li>
+                        <li><span class="flex items-center gap-2 hover:text-alfa-600 cursor-default"><i data-lucide="check-square" class="w-4 h-4 text-alfa-500"></i> Gestão de Baterias</span></li>
+                        <li><span class="flex items-center gap-2 hover:text-alfa-600 cursor-default"><i data-lucide="check-square" class="w-4 h-4 text-alfa-500"></i> Microsoldagem SMD</span></li>
+                        <li><span class="flex items-center gap-2 hover:text-alfa-600 cursor-default"><i data-lucide="check-square" class="w-4 h-4 text-alfa-500"></i> Insumos Laboratoriais</span></li>
                     </ul>
                 </div>
 
                 <!-- Coluna 3 -->
                 <div>
-                    <h4 class="font-tech text-white font-bold text-lg mb-6 uppercase tracking-wider">Contato & Local</h4>
-                    <ul class="space-y-4 text-sm text-gray-400">
+                    <h4 class="font-tech text-tech-900 font-bold text-lg mb-6 uppercase tracking-wider">Conexão</h4>
+                    <ul class="space-y-4 text-sm text-gray-600 font-medium">
                         <li class="flex items-start gap-3">
-                            <i data-lucide="phone" class="w-5 h-5 text-alfa-600 mt-0.5"></i>
+                            <i data-lucide="smartphone" class="w-5 h-5 text-alfa-600 mt-0.5"></i>
                             <div>
-                                <span class="block text-white font-medium">WhatsApp</span>
-                                <a href="https://wa.me/5531973606104" target="_blank" class="hover:text-green-500 transition-colors">(31) 97360-6104</a>
+                                <span class="block text-tech-900 font-bold">Atendimento Rápido</span>
+                                <a href="https://wa.me/5531973606104" target="_blank" class="hover:text-alfa-600 transition-colors">(31) 97360-6104</a>
                             </div>
                         </li>
                         <li class="flex items-start gap-3">
-                            <i data-lucide="map-pin" class="w-5 h-5 text-alfa-600 mt-0.5"></i>
+                            <i data-lucide="map" class="w-5 h-5 text-alfa-600 mt-0.5"></i>
                             <div>
-                                <span class="block text-white font-medium">Endereço</span>
+                                <span class="block text-tech-900 font-bold">Laboratório Físico</span>
                                 65 R. Honório Hermeto<br>Belo Horizonte - MG
                             </div>
                         </li>
@@ -488,33 +459,20 @@
                 </div>
             </div>
             
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
-                <p>© 2026 ALFA Peças. Todos os direitos reservados.</p>
-                <div class="flex gap-6 mt-4 md:mt-0 font-medium uppercase tracking-wider">
-                    <a href="#" class="hover:text-white transition-colors">Feito com tecnologia e qualidade</a>
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 font-medium">
+                <p>© 2026 ALFA Tecnologia em Peças. Todos os direitos reservados.</p>
+                <div class="mt-4 md:mt-0 uppercase tracking-widest text-gray-300">
+                    Sistema Operante
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts de Interatividade Vanilla JS -->
+    <!-- Scripts (Lógica de Interface) -->
     <script>
-        // 1. Inicializar Ícones Lucide
         lucide.createIcons();
 
-        // 2. Comportamento do Header no Scroll
-        const header = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('bg-dark-900/80', 'backdrop-blur-lg', 'border-white/10', 'py-3');
-                header.classList.remove('bg-transparent', 'border-transparent', 'py-5');
-            } else {
-                header.classList.remove('bg-dark-900/80', 'backdrop-blur-lg', 'border-white/10', 'py-3');
-                header.classList.add('bg-transparent', 'border-transparent', 'py-5');
-            }
-        });
-
-        // 3. Toggle do Menu Mobile
+        // Menu Mobile Toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuLinks = mobileMenu.querySelectorAll('a');
@@ -522,32 +480,45 @@
         const toggleMenu = () => {
             mobileMenu.classList.toggle('hidden');
             const icon = mobileMenu.classList.contains('hidden') ? 'menu' : 'x';
-            mobileMenuBtn.innerHTML = `<i data-lucide="${icon}" class="w-8 h-8"></i>`;
+            mobileMenuBtn.innerHTML = `<i data-lucide="${icon}" class="w-7 h-7"></i>`;
             lucide.createIcons();
         };
 
         mobileMenuBtn.addEventListener('click', toggleMenu);
         menuLinks.forEach(link => link.addEventListener('click', toggleMenu));
 
-        // 4. Animações de Scroll (Intersection Observer)
-        const revealElements = document.querySelectorAll('.reveal');
+        // Navbar Hide/Show on Scroll (Comportamento UI Moderno)
+        let lastScroll = 0;
+        const navbarContainer = document.getElementById('navbar-container');
         
-        const revealOptions = {
-            threshold: 0.15,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const revealObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target); 
-            });
-        }, revealOptions);
-
-        revealElements.forEach(el => {
-            revealObserver.observe(el);
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            // Se passou de 100px para baixo, aplica lógica de esconder/mostrar
+            if (currentScroll > 100) {
+                if (currentScroll > lastScroll && !mobileMenu.classList.contains('hidden') === false) {
+                    // Scroll para baixo: esconde navbar sutilmente
+                    navbarContainer.style.transform = 'translateY(-150%)';
+                } else {
+                    // Scroll para cima: revela navbar
+                    navbarContainer.style.transform = 'translateY(0)';
+                }
+            } else {
+                navbarContainer.style.transform = 'translateY(0)';
+            }
+            lastScroll = currentScroll;
         });
+
+        // Efeito Reveal Profissional via Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
