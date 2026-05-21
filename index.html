@@ -343,12 +343,13 @@
                     <div class="absolute -top-4 -left-4 w-20 h-20 border-t-4 border-l-4 border-alfa-600 rounded-tl-xl z-10"></div>
                     <div class="absolute -bottom-4 -right-4 w-20 h-20 border-b-4 border-r-4 border-alfa-600 rounded-br-xl z-10"></div>
                     
-                    <div class="relative rounded-xl overflow-hidden shadow-2xl aspect-[4/3] bg-tech-900 clip-tech">
+                    <!-- Container ajustado para não cortar a imagem -->
+                    <div class="relative rounded-xl overflow-hidden shadow-2xl bg-tech-900 clip-tech w-full">
                         <img 
                             src="loja.jpeg" 
                             alt="Fachada da Loja Alfa Peças" 
-                            class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-                            onerror="this.outerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-500 font-tech\'>loja.jpeg</div>'"
+                            class="w-full h-auto object-contain opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-transform duration-700"
+                            onerror="this.outerHTML='<div class=\'w-full min-h-[300px] flex items-center justify-center text-gray-500 font-tech\'>loja.jpeg</div>'"
                         >
                         <!-- Linha de Scan sutil no hover -->
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/10 to-transparent h-10 w-full hidden group-hover:block animate-scan-line"></div>
